@@ -4,7 +4,7 @@ import 'package:very_good_slide_puzzle/models/models.dart';
 /// {@template tile}
 /// Model for a puzzle tile.
 /// {@endtemplate}
-class Tile extends Equatable {
+abstract class Tile extends Equatable {
   /// {@macro tile}
   const Tile({
     required this.value,
@@ -27,20 +27,40 @@ class Tile extends Equatable {
   final bool isWhitespace;
 
   /// Create a copy of this [Tile] with updated current position.
+  Tile copyWith({required Position currentPosition});
+
+  @override
+  List<Object> get props => [
+    value,
+    correctPosition,
+    currentPosition,
+    isWhitespace,
+  ];
+}
+
+class SimpleTile extends Tile {
+  /// constructor
+  SimpleTile({
+    required int value,
+    required Position correctPosition,
+    required Position currentPosition,
+    bool isWhitespace = false
+  })
+      : super(
+      value: value,
+      correctPosition: correctPosition,
+      currentPosition: currentPosition,
+      isWhitespace: isWhitespace
+  );
+
+
+  @override
   Tile copyWith({required Position currentPosition}) {
-    return Tile(
+    return SimpleTile(
       value: value,
       correctPosition: correctPosition,
       currentPosition: currentPosition,
       isWhitespace: isWhitespace,
     );
   }
-
-  @override
-  List<Object> get props => [
-        value,
-        correctPosition,
-        currentPosition,
-        isWhitespace,
-      ];
 }

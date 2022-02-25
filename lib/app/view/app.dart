@@ -50,6 +50,18 @@ class _AppState extends State<App> {
     'assets/audio/tile_move.mp3',
   ];
 
+  static final pipeImages = ['tap.png',
+    'left_right_up_down.png', 'left_right_up_down_x.png', 'left_right.png',
+    'left_right_x.png', 'left_down.png', 'left_down_x.png',
+    'left_right_down.png', 'left_right_up.png', 'left_up.png',
+    'left_up_down.png', 'right_down.png', 'right_up.png',
+    'right_up_down.png', 'up_down.png'
+  ];
+
+  static final pipeOtherImages = [
+    'dirt_tile.png', 'dirt_unwatered.png', 'dirt_watered.png'
+  ];
+
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
 
@@ -134,6 +146,27 @@ class _AppState extends State<App> {
         Image.asset('assets/images/facebook_icon.png').image,
         context,
       );
+
+      for (final img in pipeImages) {
+        precacheImage(
+          Image.asset('assets/images/pipe/empty/$img').image,
+          context,
+        );
+      }
+
+      for (final img in pipeImages) {
+        precacheImage(
+          Image.asset('assets/images/pipe/filled/$img').image,
+          context,
+        );
+      }
+
+      for (final img in pipeOtherImages) {
+        precacheImage(
+          Image.asset('assets/images/pipe/$img').image,
+          context,
+        );
+      }
 
       for (final audioControlAsset in audioControlAssets) {
         precacheImage(

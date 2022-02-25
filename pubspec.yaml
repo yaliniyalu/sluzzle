@@ -1,5 +1,5 @@
 name: very_good_slide_puzzle
-description: A Very Good Project created by Very Good CLI.
+description: Puzzle game created by yaliniyalu
 version: 1.0.0+1
 publish_to: none
 
@@ -37,6 +37,9 @@ flutter:
     - assets/audio/
     - assets/images/
     - assets/images/audio_control/
+    - assets/images/pipe/
+    - assets/images/pipe/empty/
+    - assets/images/pipe/filled/
     - assets/images/dashatar/gallery/
     - assets/images/dashatar/success/
     - assets/images/dashatar/green/

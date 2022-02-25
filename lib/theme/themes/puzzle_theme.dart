@@ -82,4 +82,7 @@ abstract class PuzzleTheme extends Equatable {
   ///
   /// Used for building sections of the puzzle UI.
   PuzzleLayoutDelegate get layoutDelegate;
+
+  /// The puzzle helper
+  PuzzleHelper get puzzleHelper;
 }

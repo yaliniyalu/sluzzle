@@ -80,4 +80,7 @@ class SimpleTheme extends PuzzleTheme {
         menuInactiveColor,
         layoutDelegate,
       ];
+
+  @override
+  PuzzleHelper get puzzleHelper => SimplePuzzleHelper();
 }

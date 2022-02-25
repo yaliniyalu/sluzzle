@@ -47,7 +47,7 @@ class _DashatarPuzzleActionButtonState
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((DashatarThemeBloc bloc) => bloc.state.theme);
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
     final status =
         context.select((DashatarPuzzleBloc bloc) => bloc.state.status);
@@ -86,7 +86,7 @@ class _DashatarPuzzleActionButtonState
                     // (unshuffled) before the countdown completes.
                     if (hasStarted) {
                       context.read<PuzzleBloc>().add(
-                            const PuzzleInitialized(shufflePuzzle: false),
+                            PuzzleInitialized(shufflePuzzle: false, theme: theme),
                           );
                     }
 

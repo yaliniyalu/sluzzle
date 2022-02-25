@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:very_good_slide_puzzle/theme/theme.dart';
 
 // A 3x3 puzzle board visualization:
 //
@@ -35,10 +36,14 @@ import 'package:very_good_slide_puzzle/models/models.dart';
 /// {@endtemplate}
 class Puzzle extends Equatable {
   /// {@macro puzzle}
-  const Puzzle({required this.tiles});
+  const Puzzle({required this.tiles, required this.size, required this.helper});
 
   /// List of [Tile]s representing the puzzle's current arrangement.
   final List<Tile> tiles;
+
+  final PuzzleHelper helper;
+
+  final int size;
 
   /// Get the dimension of a puzzle given its tile arrangement.
   ///
@@ -67,21 +72,12 @@ class Puzzle extends Equatable {
 
   /// Gets the number of tiles that are currently in their correct position.
   int getNumberOfCorrectTiles() {
-    final whitespaceTile = getWhitespaceTile();
-    var numberOfCorrectTiles = 0;
-    for (final tile in tiles) {
-      if (tile != whitespaceTile) {
-        if (tile.currentPosition == tile.correctPosition) {
-          numberOfCorrectTiles++;
-        }
-      }
-    }
-    return numberOfCorrectTiles;
+    return helper.getNumberOfCorrectTiles(tiles);
   }
 
   /// Determines if the puzzle is completed.
   bool isComplete() {
-    return (tiles.length - 1) - getNumberOfCorrectTiles() == 0;
+    return helper.isComplete(tiles);
   }
 
   /// Determines if the tapped tile can move in the direction of the whitespace
@@ -202,7 +198,12 @@ class Puzzle extends Equatable {
       );
     }
 
-    return Puzzle(tiles: tiles);
+    return copyWithTiles(tiles);
+  }
+
+  /// create new puzzle with different tiles
+  Puzzle copyWithTiles(List<Tile> tiles) {
+    return Puzzle(tiles: tiles, size: size, helper: helper);
   }
 
   /// Sorts puzzle tiles so they are in order of their current position.
@@ -211,7 +212,7 @@ class Puzzle extends Equatable {
       ..sort((tileA, tileB) {
         return tileA.currentPosition.compareTo(tileB.currentPosition);
       });
-    return Puzzle(tiles: sortedTiles);
+    return copyWithTiles(sortedTiles);
   }
 
   @override

@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
 import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
+import 'package:very_good_slide_puzzle/jigsaw/jigsaw.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
+import 'package:very_good_slide_puzzle/math/math.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:very_good_slide_puzzle/pipe/pipe.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
@@ -44,6 +47,9 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeBloc(
             initialThemes: [
+              const JigSawTheme(),
+              const MathTheme(),
+              const PipeTheme(),
               const SimpleTheme(),
               context.read<DashatarThemeBloc>().state.theme,
             ],
@@ -94,10 +100,11 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc(4, theme)
                   ..add(
                     PuzzleInitialized(
                       shufflePuzzle: shufflePuzzle,
+                      theme: theme
                     ),
                   ),
               ),
@@ -124,8 +131,8 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
-            if (theme is SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
+            // if (theme is SimpleTheme)
+            theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -139,8 +146,8 @@ class _Puzzle extends StatelessWidget {
                 ),
               ),
             ),
-            if (theme is! SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
+            // if (theme is! SimpleTheme)
+            //   theme.layoutDelegate.backgroundBuilder(state),
           ],
         );
       },
@@ -453,6 +460,7 @@ class PuzzleMenuItem extends StatelessWidget {
                 context.read<PuzzleBloc>().add(
                       PuzzleInitialized(
                         shufflePuzzle: theme is SimpleTheme,
+                        theme: theme
                       ),
                     );
               },

@@ -108,4 +108,7 @@ abstract class DashatarTheme extends PuzzleTheme {
         audioAsset,
         dashAssetsDirectory
       ];
+
+  @override
+  PuzzleHelper get puzzleHelper => SimplePuzzleHelper();
 }

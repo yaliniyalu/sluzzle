@@ -67,7 +67,8 @@ class _DashatarCountdownState extends State<DashatarCountdown> {
 
           // Shuffle the puzzle on every countdown tick.
           if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-            context.read<PuzzleBloc>().add(const PuzzleReset());
+            final st = context.read<PuzzleBloc>().state;
+            context.read<PuzzleBloc>().add(PuzzleReset(puzzle: st.puzzle));
           }
         },
         child: ResponsiveLayoutBuilder(
